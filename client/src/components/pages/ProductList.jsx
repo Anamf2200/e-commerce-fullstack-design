@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect ,useState} from 'react';
 import Navbar from '../../components/Navbar.jsx';
 import SecondryNavbar from '../../components/pages/SecondryNavbar.jsx';
 import Newsletter from '../Newsletter.jsx';
@@ -10,6 +10,12 @@ import cellphone from '../.././assets/images/cellphone.png'
 import watch from '../.././assets/images/watch.png'
 import ProductPagination from '../ProductPagination.jsx';
 import { Link } from 'react-router-dom';
+
+import { useGetProductQuery } from '../../productRedux/productApi.js';
+import { addtoCart } from '../../slices/add-to-cart-slice.js';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useLazyGetproductQuery } from '../../productRedux/productApi.js';
 
 
 
@@ -174,20 +180,36 @@ const ProductFilterSidebar = () => {
 
 
 const ProductList = () => {
-    const productData = [
-        { id: 1, name: 'Canon Cmera EOS 2000, Black 10x zoom', price: '998.00', oldPrice: '1128.00', orders: 154, rating: 7.5, image: redmobile},
-        { id: 2, name: 'GoPro HERO6 4K Action Camera - Black', price: '998.00', orders: 154, rating: 7.5, image:displaylaptop },
-        { id: 3, name: 'GoPro HERO6 4K Action Camera - Black', price: '998.00', orders: 154, rating: 7.5, image:whiteheadphone },
-        { id: 4, name: 'GoPro HERO6 4K Action Camera - Black', price: '998.00', orders: 154, rating: 7.5, image: watch },
-        { id: 5, name: 'GoPro HERO6 4K Action Camera - Black', price: '998.00', orders: 154, rating: 7.5, image: cellphone },
-        { id: 6, name: 'GoPro HERO6 4K Action Camera - Black', price: '998.00', orders: 154, rating: 7.5, image: watch },
-        { id: 6, name: 'GoPro HERO6 4K Action Camera - Black', price: '998.00', orders: 154, rating: 7.5, image: watch },
+    const filters= useSelector((state)=>state.filters)
+    const dispatch=useDispatch()
+    const {data,isLoading,isError}=useGetProductQuery()
+    const [searchProduct,{data:searchedProduct,isLoading:loadingAll,isError:allError}]=useLazyGetproductQuery()
+    const [productsToRender, setproductsToRender] = useState([])
+
+useEffect(() => {
+    if ((filters.name && filters.name.trim() !== "")|| (filters.category && filters.category.trim() !== "")) {
+        // If search input has text, fetch filtered products
+        searchProduct(filters);
+    } else {
+        // If search input is empty, show all products
+        setproductsToRender(data);
+    }
+}, [filters.name,filters.category, data]);
 
 
-    ];
+useEffect(() => {
+ if(searchedProduct){
+    setproductsToRender(searchedProduct)
+ }
+}, [searchedProduct])
+
+
+
+
 
     const renderProductCard = (product) => (
-        <div key={product.id} className="flex border border-gray-200 p-4 rounded-lg bg-white hover:shadow-lg transition duration-200">
+
+        <div key={product._id} className="flex border border-gray-200 p-4 rounded-lg bg-white hover:shadow-lg transition duration-200">
             <div className="w-1/4 flex-shrink-0 mr-4 h-32 flex items-center justify-center">
                 <img src={product.image} alt={product.name} className="max-h-full max-w-full object-contain" />
             </div>
@@ -223,9 +245,10 @@ const ProductList = () => {
                 
                 <div className="mt-2">
                     <p className="text-xs text-gray-500 line-clamp-2">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                    <Link to='/productDetails' className="text-xs text-blue-600 hover:underline mt-1 block">View details</Link>
+                                {product.description}                     </p>
+                    <Link to={`/product/${product._id}`} className="text-xs text-blue-600 hover:underline mt-1 block">View details</Link>
+            <button onClick={()=>dispatch(addtoCart(product))} className="text-xs text-blue-600 hover:underline mt-1 block">Add to cart</button>
+
                 </div>
             </div>
         </div>
@@ -237,6 +260,7 @@ const ProductList = () => {
             <SecondryNavbar/>
 
             <div className="bg-gray-50 pt-4 pb-10 px-6">
+                
                 
                 <div className="flex flex-wrap lg:flex-nowrap lg:space-x-4">
                     
@@ -278,8 +302,12 @@ const ProductList = () => {
                             </div>
                         </div>
 
-                        <div className="space-y-4">
-                            {productData.map(renderProductCard)}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                              {( isLoading|| loadingAll) && <p>Loading...</p>}
+                {( isError|| allError) && <p>Error loading products</p>}
+                {productsToRender && productsToRender.length === 0 && <p>No products found.</p>}
+                {productsToRender && productsToRender.map(renderProductCard)}
+
                         </div>
                         <ProductPagination/>
 

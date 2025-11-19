@@ -31,48 +31,33 @@ import FilterNavbar from '../FilterNavbar'
 import Footer from '../Footer'
 import DiscountBanner from '../DiscountBanner'
 import SearchBar from '../SearchBar'
+import { useParams } from 'react-router-dom'
+import { useGetProductByIdQuery } from '../../productRedux/productApi'
+import { useGetProductQuery } from '../../productRedux/productApi'
 
 
 
 
 const ProductDetails = () => {
+    const {id}=useParams()
+    const {data,isLoading,isError}=useGetProductByIdQuery(id)
+    const{data:product}=useGetProductQuery()
+
+    
+  if (isLoading) return <p className="text-center mt-20">Loading...</p>;
+  if (isError) return <p className="text-center mt-20">Error loading product</p>;
+  if (!data) return <p className="text-center mt-20">No product found</p>;
+   
+
 const activeTab = 'description'; 
 
-    // Hardcoded recommended products for the sidebar
-    const recommendedItems = [
-        { name: "Men Blazers Sets Elegant Formal", price: "$7.00 - $99.50", image:shirt },
-        { name: "Men Shirt Sleeve Polo Contrast", price: "$7.00 - $99.50", image:coat },
-        { name: "Apple Watch Series Space Gray", price: "$7.00 - $99.50", image: jacket },
-        { name: "Basketball Crew Socks Long Stuff", price: "$7.00 - $99.50", image: short },
-        { name: "New Summer Men's castrol T-Shirts", price: "$7.00 - $99.50", image: bag },
-    ]; 
-     const thumbnailImages = [
-        productthumb1, productthumb2, productthumb3, productthumb4, productthumb5, productthumb6
-    ];
+   
+     
 
-     const relatedItems = [
-        { name: "Xiaomi Redmi 8 Original", price: "$32.00 - $40.00", image: wallet },
-        { name: "Xiaomi Redmi 8 Original", price: "$32.00 - $40.00", image: watch },
-        { name: "Xiaomi Redmi 8 Original", price: "$32.00 - $40.00", image: headphone },
-        { name: "Xiaomi Redmi 8 Original", price: "$32.00 - $40.00", image: short },
-        { name: "Xiaomi Redmi 8 Original", price: "$32.00 - $40.00", image: kattle },
-        { name: "Xiaomi Redmi 8 Original", price: "$32.00 - $40.00", image: kitchen },
-    ];
-    const priceTiers = [
-        { price: '98.00', quantity: '50-100 pcs' },
-        { price: '90.00', quantity: '100-700 pcs' },
-        { price: '78.00', quantity: '700+ pcs' },
-    ];
+ 
+ 
 
-    const specs = [
-        { label: 'Price:', value: 'Negotiable', special: false },
-        { label: 'Type:', value: 'Classic shoes', special: false },
-        { label: 'Material:', value: 'Plastnpmic material', special: false },
-        { label: 'Design:', value: 'Modern nice', special: false },
-        { label: 'Customization:', value: 'Customized logo and design custom packages', special: true },
-        { label: 'Protection:', value: 'Refund Policy', special: true },
-        { label: 'Warranty:', value: '2 years full warranty', special: true },
-    ];
+    
   return (
 
 
@@ -81,7 +66,10 @@ const activeTab = 'description';
     <SecondaryNavbar/>
     <FilterNavbar/>
 
+
+
     <div className='bg-gray-50'>
+
           <div className="w-full mt-4 lg:w-4/5 mx-auto px-6 py-8 border border-gray-300 bg-white-50 rounded-lg"> 
             
             <div className="w-full sm:w-11/12 lg:w-4/5 mx-auto"> 
@@ -91,27 +79,27 @@ const activeTab = 'description';
                     <div className="w-full lg:w-4/12 flex-shrink-0 mb-6 lg:mb-0">
                         
                         <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-md flex justify-center items-center h-96 mb-4">
-                            <img src={productthumb} alt="Main Product View" className="max-h-full max-w-full object-contain" />
+                            <img src={data.image} alt="Main Product View" className="max-h-full max-w-full object-contain" />
                         </div>
                         
                         <div className="flex space-x-3 overflow-x-auto pb-2">
                             <button className="w-16 h-16 flex-shrink-0 bg-white border border-orange-500 rounded-md p-1 hover:border-blue-500 transition">
-                                <img src={productthumb1} alt="Thumbnail 1" className="w-full h-full object-contain" />
+                                <img src={data.image} alt="Thumbnail 1" className="w-full h-full object-contain" />
                             </button>
                             <button className="w-16 h-16 flex-shrink-0 bg-white border border-gray-200 rounded-md p-1 hover:border-blue-500 transition">
-                                <img src={productthumb2} alt="Thumbnail 2" className="w-full h-full object-contain" />
+                                <img src={data.image} alt="Thumbnail 2" className="w-full h-full object-contain" />
                             </button>
                             <button className="w-16 h-16 flex-shrink-0 bg-white border border-gray-200 rounded-md p-1 hover:border-blue-500 transition">
-                                <img src={productthumb3} alt="Thumbnail 3" className="w-full h-full object-contain" />
+                                <img src={data.image} alt="Thumbnail 3" className="w-full h-full object-contain" />
                             </button>
                             <button className="w-16 h-16 flex-shrink-0 bg-white border border-gray-200 rounded-md p-1 hover:border-blue-500 transition">
-                                <img src={productthumb4} alt="Thumbnail 4" className="w-full h-full object-contain" />
+                                <img src={data.image} alt="Thumbnail 4" className="w-full h-full object-contain" />
                             </button>
                             <button className="w-16 h-16 flex-shrink-0 bg-white border border-gray-200 rounded-md p-1 hover:border-blue-500 transition">
-                                <img src={productthumb5} alt="Thumbnail 5" className="w-full h-full object-contain" />
+                                <img src={data.image} alt="Thumbnail 5" className="w-full h-full object-contain" />
                             </button>
                             <button className="w-16 h-16 flex-shrink-0 bg-white border border-gray-200 rounded-md p-1 hover:border-blue-500 transition">
-                                <img src={productthumb6} alt="Thumbnail 6" className="w-full h-full object-contain" />
+                                <img src={data.image} alt="Thumbnail 6" className="w-full h-full object-contain" />
                             </button>
                         </div>
                     </div>
@@ -124,7 +112,7 @@ const activeTab = 'description';
                                 <span className="text-green-600 font-medium text-sm">✓ In stock</span>
                             </div>
                             <h1 className="text-xl font-semibold text-gray-800 leading-snug">
-                                Mens Long Sleeve T-shirt cotton Base Layer Slim Muscle
+                                {data.name}
                             </h1>
                             
                             <div className="flex items-center space-x-3 mt-2 pb-4 border-b border-gray-100">
@@ -156,7 +144,7 @@ const activeTab = 'description';
                             <div className="pt-4 space-y-2">
                                 <div className="flex items-start">
                                     <span className="w-24 text-sm text-gray-500 flex-shrink-0">Price:</span>
-                                    <span className="text-sm text-gray-700">Negotiable</span>
+                                    <span className="text-sm text-gray-700">{data.price}</span>
                                 </div>
                                 <div className="flex items-start">
                                     <span className="w-24 text-sm text-gray-500 flex-shrink-0">Type:</span>
@@ -334,7 +322,7 @@ const activeTab = 'description';
                 <div className="w-full lg:w-1/5 mt-8 lg:mt-0 lg:flex-shrink-0">
                     <h3 className="text-lg font-semibold text-gray-800 mb-4">You may like</h3>
                     <div className="space-y-3">
-                        {recommendedItems.map((item, index) => (
+                        {product.map((item, index) => (
                             <div key={index} className="flex space-x-3 items-center border border-gray-200 p-2 rounded-lg hover:shadow-sm transition cursor-pointer">
                                 <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded-md flex-shrink-0" />
                                 
@@ -356,11 +344,13 @@ const activeTab = 'description';
             </h2>
             
             <div className="flex flex-wrap -mx-2">
+
+                {/* related producst */}
                 
-                {relatedItems.map((item, index) => (
+                {product.map((item, index) => (
                     <div 
                         key={index} 
-                        className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 px-2 mb-4"
+                        className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6  px-2 mb-4 "
                     >
                         <div className="bg-white rounded-lg overflow-hidden h-full group cursor-pointer hover:shadow-lg transition duration-200">
                             

@@ -45,6 +45,7 @@ import denmark from '../../assets/images/denmark.png'
 import russia from '../../assets/images/russia.png'
 import greatbritin from '../../assets/images/greatbritin.png'
 import { Link } from 'react-router-dom'
+import { useGetProductQuery } from '../../productRedux/productApi'
 
 
 
@@ -57,6 +58,7 @@ import { Link } from 'react-router-dom'
 
 
 const Home = () => {
+    const {data,isLoading,isError}=useGetProductQuery()
   return (
     <>
             <Navbar/>
@@ -172,46 +174,20 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
+                    {isLoading && <p>Loading data</p>}
+                    {isError && <p>There are some error</p>}
+                    {data?.map((item)=>(
 
-                    <div className="w-1/2 sm:w-1/3 lg:w-1/6 p-4 flex flex-col items-center justify-between text-center min-h-[250px] group flex-grow border-b sm:border-b-0 lg:border-r border-gray-200">
+                        <div key={item._id} className="w-1/2 sm:w-1/3 lg:w-1/6 p-4 flex flex-col items-center justify-between text-center min-h-[250px] group flex-grow border-b sm:border-b-0 lg:border-r border-gray-200">
+
                         <div className="flex-grow flex items-center justify-center pt-2">
-                            <img src={watch} alt="Smart watches" className="max-h-32 object-contain transition duration-300 group-hover:scale-105" />
+                            <img src={item.image} alt="Smart watches" className="max-h-32 object-contain transition duration-300 group-hover:scale-105" />
                         </div>
-                        <p className="text-sm text-gray-700 font-medium mt-3 mb-2">Smart watches</p>
+                        <p className="text-sm text-gray-700 font-medium mt-3 mb-2">{item.name}</p>
                         <div className="bg-red-100 text-red-500 text-xs font-semibold px-2 py-1 rounded-full">-25%</div>
                     </div>
+                    ))}
 
-                    <div className="w-1/2 sm:w-1/3 lg:w-1/6 p-4 flex flex-col items-center justify-between text-center min-h-[250px] group flex-grow border-b sm:border-b-0 lg:border-r border-gray-200">
-                        <div className="flex-grow flex items-center justify-center pt-2">
-                            <img src={laptop} alt="Laptops" className="max-h-32 object-contain transition duration-300 group-hover:scale-105" />
-                        </div>
-                        <p className="text-sm text-gray-700 font-medium mt-3 mb-2">Laptops</p>
-                        <div className="bg-red-100 text-red-500 text-xs font-semibold px-2 py-1 rounded-full">-15%</div>
-                    </div>
-
-                    <div className="w-1/2 sm:w-1/3 lg:w-1/6 p-4 flex flex-col items-center justify-between text-center min-h-[250px] group flex-grow border-b sm:border-b-0 lg:border-r border-gray-200">
-                        <div className="flex-grow flex items-center justify-center pt-2">
-                            <img src={camera} alt="GoPro cameras" className="max-h-32 object-contain transition duration-300 group-hover:scale-105" />
-                        </div>
-                        <p className="text-sm text-gray-700 font-medium mt-3 mb-2">GoPro cameras</p>
-                        <div className="bg-red-100 text-red-500 text-xs font-semibold px-2 py-1 rounded-full">-40%</div>
-                    </div>
-
-                    <div className="w-1/2 sm:w-1/3 lg:w-1/6 p-4 flex flex-col items-center justify-between text-center min-h-[250px] group flex-grow border-b sm:border-b-0 lg:border-r border-gray-200">
-                        <div className="flex-grow flex items-center justify-center pt-2">
-                            <img src={headphone} alt="Headphones" className="max-h-32 object-contain transition duration-300 group-hover:scale-105" />
-                        </div>
-                        <p className="text-sm text-gray-700 font-medium mt-3 mb-2">Headphones</p>
-                        <div className="bg-red-100 text-red-500 text-xs font-semibold px-2 py-1 rounded-full">-25%</div>
-                    </div>
-
-                    <div className="w-1/2 sm:w-1/3 lg:w-1/6 p-4 flex flex-col items-center justify-between text-center min-h-[250px] group flex-grow">
-                        <div className="flex-grow flex items-center justify-center pt-2">
-                            <img src={mobile} alt="Canon camreras" className="max-h-32 object-contain transition duration-300 group-hover:scale-105" />
-                        </div>
-                        <p className="text-sm text-gray-700 font-medium mt-3 mb-2">Canon camreras</p>
-                        <div className="bg-red-100 text-red-500 text-xs font-semibold px-2 py-1 rounded-full">-25%</div>
-                    </div>
                 </div>
             </div>
 
@@ -227,54 +203,25 @@ const Home = () => {
                                 <h3 className="text-xl font-semibold text-gray-800 leading-tight mb-4">
                                     Home and outdoor
                                 </h3>
-                                <button className="w-fit px-6 py-2 bg-white text-gray-800 font-medium rounded-lg shadow-md hover:bg-gray-100 transition duration-150">
+                                <Link to='/productList' className="w-fit px-6 py-2 bg-white text-gray-800 font-medium rounded-lg shadow-md hover:bg-gray-100 transition duration-150">
                                     Source now
-                                </button>
+                                </Link>
                             </div>
                         </div>
 
                         <div className="w-full sm:w-2/3 flex flex-wrap divide-x divide-y divide-gray-200 border-t sm:border-t-0 sm:border-l border-gray-200">
+ {isLoading && <p>Loading data</p>}
+                    {isError && <p>There are some error</p>}
+                        {data?.map((item=>(
+
+                            <div key={item._id} className="w-1/2 md:w-1/4 p-3 flex flex-col items-start space-y-1 hover:bg-gray-50 transition">
+                                <p className="text-sm text-gray-700 font-medium">{item.name}</p>
+                                <p className="text-xs text-gray-500">From USD {item.price}</p>
+                                <img src={item.image} alt="Soft chairs" className="w-16 h-16 object-contain self-end mt-2" />
+                            </div>
+                        )))}
                             
-                            <div className="w-1/2 md:w-1/4 p-3 flex flex-col items-start space-y-1 hover:bg-gray-50 transition">
-                                <p className="text-sm text-gray-700 font-medium">Soft chairs</p>
-                                <p className="text-xs text-gray-500">From USD 19</p>
-                                <img src={sofa} alt="Soft chairs" className="w-16 h-16 object-contain self-end mt-2" />
-                            </div>
-                            <div className="w-1/2 md:w-1/4 p-3 flex flex-col items-start space-y-1 hover:bg-gray-50 transition">
-                                <p className="text-sm text-gray-700 font-medium">Sofa & chair</p>
-                                <p className="text-xs text-gray-500">From USD 19</p>
-                                <img src={chair} alt="Sofa & chair" className="w-16 h-16 object-contain self-end mt-2" />
-                            </div>
-                            <div className="w-1/2 md:w-1/4 p-3 flex flex-col items-start space-y-1 hover:bg-gray-50 transition">
-                                <p className="text-sm text-gray-700 font-medium">Kitchen dishes</p>
-                                <p className="text-xs text-gray-500">From USD 19</p>
-                                <img src={dishes} alt="Kitchen dishes" className="w-16 h-16 object-contain self-end mt-2" />
-                            </div>
-                            <div className="w-1/2 md:w-1/4 p-3 flex flex-col items-start space-y-1 hover:bg-gray-50 transition">
-                                <p className="text-sm text-gray-700 font-medium">Smart watches</p>
-                                <p className="text-xs text-gray-500">From USD 19</p>
-                                <img src={smartwatcher} alt="Smart watches" className="w-16 h-16 object-contain self-end mt-2" />
-                            </div>
-                            <div className="w-1/2 md:w-1/4 p-3 flex flex-col items-start space-y-1 hover:bg-gray-50 transition">
-                                <p className="text-sm text-gray-700 font-medium">Kitchen mixer</p>
-                                <p className="text-xs text-gray-500">From USD 100</p>
-                                <img src={kitchermixer} alt="Kitchen mixer" className="w-16 h-16 object-contain self-end mt-2" />
-                            </div>
-                            <div className="w-1/2 md:w-1/4 p-3 flex flex-col items-start space-y-1 hover:bg-gray-50 transition">
-                                <p className="text-sm text-gray-700 font-medium">Blenders</p>
-                                <p className="text-xs text-gray-500">From USD 39</p>
-                                <img src={blender} alt="Blenders" className="w-16 h-16 object-contain self-end mt-2" />
-                            </div>
-                            <div className="w-1/2 md:w-1/4 p-3 flex flex-col items-start space-y-1 hover:bg-gray-50 transition">
-                                <p className="text-sm text-gray-700 font-medium">Home appliance</p>
-                                <p className="text-xs text-gray-500">From USD 19</p>
-                                <img src={appliance} alt="Home appliance" className="w-16 h-16 object-contain self-end mt-2" />
-                            </div>
-                            <div className="w-1/2 md:w-1/4 p-3 flex flex-col items-start space-y-1 hover:bg-gray-50 transition">
-                                <p className="text-sm text-gray-700 font-medium">Coffee maker</p>
-                                <p className="text-xs text-gray-500">From USD 10</p>
-                                <img src={coffee} alt="Coffee maker" className="w-16 h-16 object-contain self-end mt-2" />
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -296,47 +243,14 @@ const Home = () => {
                         </div>
 
                         <div className="w-full sm:w-2/3 flex flex-wrap divide-x divide-y divide-gray-200 border-t sm:border-t-0 sm:border-l border-gray-200">
-                            
-                            <div className="w-1/2 md:w-1/4 p-3 flex flex-col items-start space-y-1 hover:bg-gray-50 transition">
-                                <p className="text-sm text-gray-700 font-medium">Smart watches</p>
-                                <p className="text-xs text-gray-500">From USD 19</p>
-                                <img src={smartwatcher} alt="Smart watches" className="w-16 h-16 object-contain self-end mt-2" />
+                            {data?.map((item)=>(
+                                 <div key={item._id} className="w-1/2 md:w-1/4 p-3 flex flex-col items-start space-y-1 hover:bg-gray-50 transition">
+                                <p className="text-sm text-gray-700 font-medium">{item.name}</p>
+                                <p className="text-xs text-gray-500">From USD {item.price}</p>
+                                <img src={item.image} alt="Smart watches" className="w-16 h-16 object-contain self-end mt-2" />
                             </div>
-                            <div className="w-1/2 md:w-1/4 p-3 flex flex-col items-start space-y-1 hover:bg-gray-50 transition">
-                                <p className="text-sm text-gray-700 font-medium">Cameras</p>
-                                <p className="text-xs text-gray-500">From USD 19</p>
-                                <img src={camera} alt="Cameras" className="w-16 h-16 object-contain self-end mt-2" />
-                            </div>
-                            <div className="w-1/2 md:w-1/4 p-3 flex flex-col items-start space-y-1 hover:bg-gray-50 transition">
-                                <p className="text-sm text-gray-700 font-medium">Headphones</p>
-                                <p className="text-xs text-gray-500">From USD 19</p>
-                                <img src={headphone} alt="Headphones" className="w-16 h-16 object-contain self-end mt-2" />
-                            </div>
-                            <div className="w-1/2 md:w-1/4 p-3 flex flex-col items-start space-y-1 hover:bg-gray-50 transition">
-                                <p className="text-sm text-gray-700 font-medium">Smart watches</p>
-                                <p className="text-xs text-gray-500">From USD 19</p>
-                                <img src={watch} alt="Smart watches" className="w-16 h-16 object-contain self-end mt-2" />
-                            </div>
-                            <div className="w-1/2 md:w-1/4 p-3 flex flex-col items-start space-y-1 hover:bg-gray-50 transition">
-                                <p className="text-sm text-gray-700 font-medium">Smart watches</p>
-                                <p className="text-xs text-gray-500">From USD 100</p>
-                                <img src={smartwatcher} alt="Smart watches" className="w-16 h-16 object-contain self-end mt-2" />
-                            </div>
-                            <div className="w-1/2 md:w-1/4 p-3 flex flex-col items-start space-y-1 hover:bg-gray-50 transition">
-                                <p className="text-sm text-gray-700 font-medium">Gaming Set</p>
-                                <p className="text-xs text-gray-500">From USD 39</p>
-                                <img src={headphone} alt="Gaming Set" className="w-16 h-16 object-contain self-end mt-2" />
-                            </div>
-                            <div className="w-1/2 md:w-1/4 p-3 flex flex-col items-start space-y-1 hover:bg-gray-50 transition">
-                                <p className="text-sm text-gray-700 font-medium">Laptop & PC's</p>
-                                <p className="text-xs text-gray-500">From USD 19</p>
-                                <img src={laptop} alt="Laptop" className="w-16 h-16 object-contain self-end mt-2" />
-                            </div>
-                            <div className="w-1/2 md:w-1/4 p-3 flex flex-col items-start space-y-1 hover:bg-gray-50 transition">
-                                <p className="text-sm text-gray-700 font-medium">Electonics</p>
-                                <p className="text-xs text-gray-500">From USD 10</p>
-                                <img src={mobile} alt="Electonics" className="w-16 h-16 object-contain self-end mt-2" />
-                            </div>
+                            ))}
+                           
                         </div>
                     </div>
                 </div>
@@ -391,13 +305,18 @@ const Home = () => {
                 <h2 className="text-2xl font-semibold text-gray-800 mb-5">
                     Recommended items
                 </h2>
-                
-                <div className="flex flex-wrap -m-2"> 
+                {isLoading && <p>Loading...</p>}
+{isError && <p>Error fetching products</p>}
+{data &&  (
+
+      <div className="flex flex-wrap -m-2"> 
                     
-                    <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 p-2">
+                    {data?.map(item=>(
+
+                        <div key={item._id} className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 p-2">
                         <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition duration-200 h-full">
                             <div className="h-40 flex items-center justify-center p-4 relative">
-                                <img src={shirt} alt="T-shirt" className="max-h-32 object-contain" />
+                                <img src={item.image} alt="T-shirt" className="max-h-32 object-contain" />
                             </div>
                             <div className="p-3 border-t border-gray-100">
                                 <p className="text-lg font-semibold text-gray-800 mb-1">$10.30</p>
@@ -405,140 +324,11 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-
-                    <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 p-2">
-                        <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition duration-200 h-full">
-                            <div className="h-40 flex items-center justify-center p-4 relative">
-                                <img src={shorts} alt="Jeans shorts" className="max-h-32 object-contain" />
-                            </div>
-                            <div className="p-3 border-t border-gray-100">
-                                <p className="text-lg font-semibold text-gray-800 mb-1">$10.30</p>
-                                <p className="text-xs text-gray-500 leading-tight">Jeans shorts for men blue color</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 p-2">
-                        <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition duration-200 h-full">
-                            <div className="h-40 flex items-center justify-center p-4 relative">
-                                <img src={coat} alt="Winter coat" className="max-h-32 object-contain" />
-                            </div>
-                            <div className="p-3 border-t border-gray-100">
-                                <p className="text-lg font-semibold text-gray-800 mb-1">$12.50</p>
-                                <p className="text-xs text-gray-500 leading-tight">Brown winter coat medium size</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 p-2">
-                        <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition duration-200 h-full">
-                            <div className="h-40 flex items-center justify-center p-4 relative">
-                                <img src={jacket} alt="Jeans bag" className="max-h-32 object-contain" />
-                            </div>
-                            <div className="p-3 border-t border-gray-100">
-                                <p className="text-lg font-semibold text-gray-800 mb-1">$34.00</p>
-                                <p className="text-xs text-gray-500 leading-tight">Jeans bag for travel for men</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 p-2">
-                        <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition duration-200 h-full">
-                            <div className="h-40 flex items-center justify-center p-4 relative">
-                                <img src={bag} alt="Leather wallet" className="max-h-32 object-contain" />
-                            </div>
-                            <div className="p-3 border-t border-gray-100">
-                                <p className="text-lg font-semibold text-gray-800 mb-1">$99.00</p>
-                                <p className="text-xs text-gray-500 leading-tight">Leather wallet</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 p-2">
-                        <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition duration-200 h-full">
-                            <div className="h-40 flex items-center justify-center p-4 relative">
-                                <img src={wallet} alt="Leather wallet" className="max-h-32 object-contain" />
-                            </div>
-                            <div className="p-3 border-t border-gray-100">
-                                <p className="text-lg font-semibold text-gray-800 mb-1">$99.00</p>
-                                <p className="text-xs text-gray-500 leading-tight">Leather wallet</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-
-                    <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 p-2">
-                        <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition duration-200 h-full">
-                            <div className="h-40 flex items-center justify-center p-4 relative">
-                                <img src={shorts} alt="Canon camera" className="max-h-32 object-contain" />
-                            </div>
-                            <div className="p-3 border-t border-gray-100">
-                                <p className="text-lg font-semibold text-gray-800 mb-1">$9.99</p>
-                                <p className="text-xs text-gray-500 leading-tight">Canon camera black, 100x zoom</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 p-2">
-                        <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition duration-200 h-full">
-                            <div className="h-40 flex items-center justify-center p-4 relative">
-                                <img src={headphone} alt="Headset" className="max-h-32 object-contain" />
-                            </div>
-                            <div className="p-3 border-t border-gray-100">
-                                <p className="text-lg font-semibold text-gray-800 mb-1">$8.99</p>
-                                <p className="text-xs text-gray-500 leading-tight">Headset for gaming with mic</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 p-2">
-                        <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition duration-200 h-full">
-                            <div className="h-40 flex items-center justify-center p-4 relative">
-                                <img src={bag} alt="Smartwatch" className="max-h-32 object-contain" />
-                            </div>
-                            <div className="p-3 border-t border-gray-100">
-                                <p className="text-lg font-semibold text-gray-800 mb-1">$10.30</p>
-                                <p className="text-xs text-gray-500 leading-tight">Smartwatch silver color modern</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 p-2">
-                        <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition duration-200 h-full">
-                            <div className="h-40 flex items-center justify-center p-4 relative">
-                                <img src={smartwatcher} alt="Blue wallet" className="max-h-32 object-contain" />
-                            </div>
-                            <div className="p-3 border-t border-gray-100">
-                                <p className="text-lg font-semibold text-gray-800 mb-1">$10.30</p>
-                                <p className="text-xs text-gray-500 leading-tight">Blue wallet for men leather metarfial</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 p-2">
-                        <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition duration-200 h-full">
-                            <div className="h-40 flex items-center justify-center p-4 relative">
-                                <img src={kettle} alt="Jeans bag" className="max-h-32 object-contain" />
-                            </div>
-                            <div className="p-3 border-t border-gray-100">
-                                <p className="text-lg font-semibold text-gray-800 mb-1">$80.95</p>
-                                <p className="text-xs text-gray-500 leading-tight">Jeans bag for travel for men</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 p-2">
-                        <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition duration-200 h-full">
-                            <div className="h-40 flex items-center justify-center p-4 relative">
-                                <img src={kettle} alt="Jeans bag" className="max-h-32 object-contain" />
-                            </div>
-                            <div className="p-3 border-t border-gray-100">
-                                <p className="text-lg font-semibold text-gray-800 mb-1">$80.95</p>
-                            </div>
-                        </div>
-                    </div>
+))}
                     
                 </div>
+)}
+              
             </div>
 
 
