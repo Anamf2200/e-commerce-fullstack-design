@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import logo from '../assets/images/logo-colored.png';
 import profile from '../assets/images/Profile.png';
 import message from '../assets/images/Message.png';
@@ -6,9 +6,17 @@ import order from '../assets/images/Orders.png';
 import cart from '../assets/images/Cart.png';
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
-
+import  LogOut  from '../assets/images/Logout.png';
+import { logOut } from '../slices/auth-slice';
+import { useDispatch } from 'react-redux';
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+const dispatch= useDispatch()
+ const handleLogout = () => {
+    dispatch(logOut()); 
+    
+    window.location.href = "/"; 
+  };
 
   return (
     <header className="header flex items-center  justify-around px-4 py-3 border-b border-gray-200 bg-white shadow-sm sticky top-0 z-50">
@@ -33,6 +41,10 @@ const Navbar = () => {
         <Link to="/cart">
           <img src={cart} alt="Cart" className="w-10 h-10 hover:opacity-80 transition" />
         </Link>
+
+        <button onClick={handleLogout}>
+          <img src={LogOut} alt="Logout" className="w-10 h-10 hover:opacity-80 transition" />
+        </button>
       </div>
 
       <button

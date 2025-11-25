@@ -211,7 +211,7 @@ useEffect(() => {
 
         <div key={product._id} className="flex border border-gray-200 p-4 rounded-lg bg-white hover:shadow-lg transition duration-200">
             <div className="w-1/4 flex-shrink-0 mr-4 h-32 flex items-center justify-center">
-                <img src={product.image} alt={product.name} className="max-h-full max-w-full object-contain" />
+                <img src={`http://localhost:3000/uploads/${product.image}`} alt={product.name} className="max-h-full max-w-full object-contain" />
             </div>
 
             <div className="w-3/4 flex flex-col justify-between">

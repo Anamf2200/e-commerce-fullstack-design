@@ -21,8 +21,10 @@ import { useGetProductQuery } from '../../productRedux/productApi';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromCart, increaseQty, decreaseQty, addtoCart, clearCart } from '../../slices/add-to-cart-slice';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
+  const navigate= useNavigate()
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems || []);
   const {data,isLoading,isError}=useGetProductQuery()
@@ -37,13 +39,19 @@ const Cart = () => {
   const tax = 14; // example static tax
   const total = subtotal - discount + tax;
 
+  const handleCheckout=async()=>{
+    alert("Your order is placed")
+    navigate('/home')
+    
+  }
+
 const savedItems = [ { name: 'GoPro HERO6 4K Action Camera - Black', price: 99.50, image: watch }, { name: 'GoPro HERO6 4K Action Camera - Black', price: 99.50, image: displaylaptop }, { name: 'GoPro HERO6 4K Action Camera - Black', price: 99.50, image: cellphone }, { name: 'GoPro HERO6 4K Action Camera - Black', price: 99.50, image: colors }, ];
   const SavedProductCard = ({ item }) => 
     
     (<div className="w-full sm:w-1/2 lg:w-1/4 px-2 mb-4">
        <div className="bg-white rounded-lg overflow-hidden h-full"> 
         <div className="h-48 p-4 flex items-center justify-center bg-gray-100 rounded-t-lg"> 
-          <img src={item.image} alt={item.name} className="max-h-full max-w-full object-contain" /> 
+          <img src={`http://localhost:3000/uploads/${item.image}`} alt={item.name} className="max-h-full max-w-full object-contain" /> 
           </div>
            <div className="p-3"> 
             <p className="text-base font-semibold text-gray-800 mb-1">
@@ -59,7 +67,7 @@ const savedItems = [ { name: 'GoPro HERO6 4K Action Camera - Black', price: 99.5
     <div className="flex border-b border-gray-200 py-4">
       <div className="w-20 h-20 flex-shrink-0 mr-4">
         <img
-          src={item.image}
+          src={`http://localhost:3000/uploads/${item.image}`}
           alt={item.name}
           className="w-full h-full object-contain border border-gray-100 rounded-md"
         />
@@ -134,7 +142,7 @@ const savedItems = [ { name: 'GoPro HERO6 4K Action Camera - Black', price: 99.5
                 </div>
 
                 <div className="flex flex-wrap justify-between items-center gap-3 pt-6">
-                  <Link to={'/'} className="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition">
+                  <Link to={'/productList'} className="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition">
                     &larr; Back to shop
                   </Link>
                   <button onClick={()=>dispatch(clearCart())} className="w-full sm:w-auto px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition">
@@ -174,7 +182,7 @@ const savedItems = [ { name: 'GoPro HERO6 4K Action Camera - Black', price: 99.5
                     </div>
                   </div>
 
-                  <button className="w-full py-3 bg-green-600 text-white text-lg font-semibold rounded-lg hover:bg-green-700 transition shadow-lg">
+                  <button onClick={handleCheckout} className="w-full py-3 bg-green-600 text-white text-lg font-semibold rounded-lg hover:bg-green-700 transition shadow-lg">
                     Checkout
                   </button>
 

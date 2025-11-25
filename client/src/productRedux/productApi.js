@@ -6,6 +6,13 @@ export const productApi=createApi({
     reducerPath:"productApi",
     baseQuery:fetchBaseQuery({
         baseUrl:'http://localhost:3000',
+        prepareHeaders:(headers,{getState})=>{
+            const token=getState().auth.token
+            if(token){
+                headers.set(`Authorization`,`Bearer ${token}`)
+            }
+            return headers
+        }
     }),
     tagTypes:["Product"],
     endpoints:(builder)=>({
@@ -20,7 +27,8 @@ export const productApi=createApi({
         }),
 
         getProduct:builder.query({
-            query:()=>'/product'
+            query:()=>'/product',
+            providesTags:["Product"]
 
         }),
 
@@ -29,16 +37,14 @@ export const productApi=createApi({
             providesTags: ["Product"],
 
         }),
-        updateProduct:builder.mutation({
-            query:({id,updatedProduct})=>({
-                url:`/product/${id}`,
-                method:"PUT",
-                body:updatedProduct
-            }),
-        invalidatesTags: ["Product"],
-
-           
-        }),
+        updateProduct: builder.mutation({
+      query: ({ id, updatedProduct }) => ({
+        url: `/product/${id}`,
+        method: "PUT",
+        body: updatedProduct, // FormData
+      }),
+      invalidatesTags: ["Product"],
+    }),
 
         deletedProduct:builder.mutation({
             query:(id)=>({
