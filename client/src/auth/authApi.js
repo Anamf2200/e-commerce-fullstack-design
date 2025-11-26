@@ -1,9 +1,10 @@
 import { createApi,fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+const API_URL='https://server-cool-snowflake-7302.fly.dev/'
 
 export const authApi=createApi({
       reducerPath:"authApi",
     baseQuery:fetchBaseQuery({
-        baseUrl:'http://localhost:3000',
+        baseUrl:API_URL,
           tagTypes: ["User"],
         prepareHeaders:(headers,{getState})=>{
             const token=getState().auth.token
