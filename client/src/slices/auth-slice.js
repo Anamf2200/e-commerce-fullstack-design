@@ -4,7 +4,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const tokenFromStorage= typeof window!=="undefined"?localStorage.getItem("token"):null
-const userFromStorage= typeof window!=="undefined"?JSON.parse(localStorage.getItem("")):null
+const userFromStorage= typeof window!=="undefined"?JSON.parse(localStorage.getItem("user")):null
 
 const authSlice= createSlice({
     name:"auth",

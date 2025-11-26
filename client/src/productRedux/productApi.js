@@ -37,14 +37,15 @@ export const productApi=createApi({
             providesTags: ["Product"],
 
         }),
-        updateProduct: builder.mutation({
-      query: ({ id, updatedProduct }) => ({
-        url: `/product/${id}`,
-        method: "PUT",
-        body: updatedProduct, // FormData
-      }),
-      invalidatesTags: ["Product"],
-    }),
+   updateProduct: builder.mutation({
+  query: ({ id, updatedProduct }) => ({
+    url: `/product/${id}`,
+    method: "PUT",
+    body: updatedProduct, // Pass FormData directly
+    // DO NOT set 'Content-Type' header; browser will handle it
+  }),
+  invalidatesTags: ["Product"],
+}),
 
         deletedProduct:builder.mutation({
             query:(id)=>({

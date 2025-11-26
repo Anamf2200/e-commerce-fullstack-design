@@ -11,8 +11,8 @@ export class Product extends Document{
     price:number
 
 
-    @Prop({required:true})
-    image:string
+    @Prop({required:false})
+    image?:string
 
     @Prop({required:true})
     description:string

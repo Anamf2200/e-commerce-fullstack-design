@@ -27,15 +27,27 @@ async findProductById(id:string):Promise<Product|null>{
     return product
 }
 
-async update(id: string, dto: UpdateProductDto, file?: Express.Multer.File) {
+async update(id: string, dto: UpdateProductDto & { image?: string }) {
   const product = await this.productModel.findById(id);
-  if (!product) return null;
+  if (!product) throw new NotFoundException("Product not found");
+
+  // Do not overwrite image if not provided
+  if (!dto.image) {
+    delete dto.image;
+  }
 
   Object.assign(product, dto);
-  if (file) product.image = file.filename; // or your logic
   await product.save();
   return product;
 }
+
+
+
+
+
+
+
+
 
 
 async remove(id:string):Promise<Product|null>{

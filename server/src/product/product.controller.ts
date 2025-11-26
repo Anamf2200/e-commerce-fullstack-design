@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, Query, Req, Request, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/createProduct-dto';
 import { UpdateProductDto } from './dto/updateProduct-dto';
@@ -10,6 +10,7 @@ import { diskStorage } from 'multer';
 
 import { FileInterceptor } from '@nestjs/platform-express';
 import { extname } from 'path';
+import { SkipValidationPipe } from 'src/skipValidationPipe';
 
 @Controller('product')
 export class ProductController {
@@ -54,20 +55,45 @@ async search(@Query('name')name?:string,@Query('category')category?:string):Prom
     async findById(@Param('id')id:string):Promise<Product|null>{
         return this.productService.findProductById(id)
     }
-
-   @Put(':id')
+@Put(':id')
 @UseGuards(JWTAuthGuard, RolesGuard)
-@Roles('admin')
-@UseInterceptors(FileInterceptor('image')) // handle uploaded file
+@Roles("admin")
+@UseInterceptors(FileInterceptor('image', {
+  storage: diskStorage({
+    destination: './uploads',
+    filename: (req, file, cb) => {
+      const ext = extname(file.originalname);
+      cb(null, `image-${Date.now()}${ext}`);
+    },
+  }),
+}))
 async update(
   @Param('id') id: string,
-  @Body() updateProductDto: UpdateProductDto,
-  @UploadedFile() file: Express.Multer.File
+  @UploadedFile() file: Express.Multer.File,
+  @Body() body: any
 ) {
-  const product = await this.productService.update(id, updateProductDto, file);
-  if (!product) throw new NotFoundException("Product not found");
-  return { message: "Product updated successfully" };
+  const updatedData: any = { ...body };
+
+  if (file) {
+    updatedData.image = file.filename; // Only update if new file uploaded
+  }
+
+  return this.productService.update(id, updatedData);
 }
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
 
 
     @Delete(':id')

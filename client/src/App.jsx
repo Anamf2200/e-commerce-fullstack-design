@@ -13,6 +13,7 @@ import AuthPage from './components/pages/Auth';
 import AdminPanel from './components/pages/AdminPanel';
 import PublicRoute from './components/pages/PublicRoute';
 import ProtectedRoute from './components/pages/ProtectedRoute';
+import EditProduct from './components/pages/EditProduct';
 
 
 function App() {
@@ -34,7 +35,11 @@ function App() {
         <AdminPanel />
       </ProtectedRoute>
     }
-  />      <Route path='/profile'element={<Profile/>}></Route>
+  />      
+  
+    <Route path="/admin/edit-product/:id" element={<EditProduct />} />
+
+  <Route path='/profile'element={<Profile/>}></Route>
       <Route path='/productList'element={<ProductList/>}></Route>
       <Route path='/product/:id'element={<ProductDetails/>}></Route>
       <Route path='/message'element={<Message/>}></Route>
