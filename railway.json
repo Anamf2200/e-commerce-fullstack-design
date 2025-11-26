@@ -1,10 +1,16 @@
 {
   "build": {
     "builder": "NIXPACKS",
-    "buildCommand": "cd server && npm install && npm run build"
+    "language": "nodejs",
+    "path": "server",
+    "buildCommand": "npm install && npm run build",
+    "env": {
+      "NODE_ENV": "production"
+    }
   },
   "deploy": {
-    "startCommand": "cd server && npm run start:prod",
+    "path": "server",
+    "startCommand": "npm run start:prod",
     "healthcheckPath": "/"
   }
 }
