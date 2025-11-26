@@ -59,6 +59,8 @@ import { useGetProductQuery } from '../../productRedux/productApi'
 
 
 const Home = () => {
+      const API_URL = "https://server-cool-snowflake-7302.fly.dev";
+
     const dispatch= useDispatch()
     const {data,isLoading,isError}=useGetProductQuery()
   return (
@@ -183,7 +185,7 @@ const Home = () => {
                         <div key={item._id} className="w-1/2 sm:w-1/3 lg:w-1/6 p-4 flex flex-col items-center justify-between text-center min-h-[250px] group flex-grow border-b sm:border-b-0 lg:border-r border-gray-200">
 
                         <div className="flex-grow flex items-center justify-center pt-2">
-                            <img src={`http://localhost:3000/uploads/${item.image}`} alt="Smart watches" className="max-h-32 object-contain transition duration-300 group-hover:scale-105" />
+                            <img src={`${API_URL}/uploads/${item.image}`} alt="Smart watches" className="max-h-32 object-contain transition duration-300 group-hover:scale-105" />
                         </div>
                         <p className="text-sm text-gray-700 font-medium mt-3 mb-2">{item.name}</p>
                         <div className="bg-red-100 text-red-500 text-xs font-semibold px-2 py-1 rounded-full">-25%</div>
@@ -219,7 +221,7 @@ const Home = () => {
                             <div key={item._id} className="w-1/2 md:w-1/4 p-3 flex flex-col items-start space-y-1 hover:bg-gray-50 transition">
                                 <p className="text-sm text-gray-700 font-medium">{item.name}</p>
                                 <p className="text-xs text-gray-500">From USD {item.price}</p>
-                                <img src={`http://localhost:3000/uploads/${item.image}`} alt="Soft chairs" className="w-16 h-16 object-contain self-end mt-2" />
+                                <img src={`${API_URL}/uploads/${item.image}`} alt="Soft chairs" className="w-16 h-16 object-contain self-end mt-2" />
                             </div>
                         )))}
                             
@@ -249,7 +251,7 @@ const Home = () => {
                                  <div key={item._id} className="w-1/2 md:w-1/4 p-3 flex flex-col items-start space-y-1 hover:bg-gray-50 transition">
                                 <p className="text-sm text-gray-700 font-medium">{item.name}</p>
                                 <p className="text-xs text-gray-500">From USD {item.price}</p>
-                                <img src={`http://localhost:3000/uploads/${item.image}`} alt="Smart watches" className="w-16 h-16 object-contain self-end mt-2" />
+                                <img src={`${API_URL}/uploads/${item.image}`} alt="Smart watches" className="w-16 h-16 object-contain self-end mt-2" />
                             </div>
                             ))}
                            
@@ -318,7 +320,7 @@ const Home = () => {
                         <div key={item._id} className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 p-2">
                         <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition duration-200 h-full">
                             <div className="h-40 flex items-center justify-center p-4 relative">
-                                <img src={`http://localhost:3000/uploads/${item.image}`} alt="T-shirt" className="max-h-32 object-contain" />
+                                <img src={`${API_URL}/uploads/${item.image}`} alt="T-shirt" className="max-h-32 object-contain" />
                             </div>
                             <div className="p-3 border-t border-gray-100">
                                 <p className="text-lg font-semibold text-gray-800 mb-1">$10.30</p>

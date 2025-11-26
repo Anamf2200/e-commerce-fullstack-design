@@ -3,6 +3,8 @@ import { useUpdateProductMutation, useGetProductByIdQuery } from "../../productR
 import { useNavigate, useParams } from "react-router-dom";
 
 const EditProduct = () => {
+    const API_URL = "https://server-cool-snowflake-7302.fly.dev";
+
   const { id } = useParams();
   const navigate = useNavigate();
   const { data: product, isFetching } = useGetProductByIdQuery(id);
@@ -81,7 +83,7 @@ const EditProduct = () => {
 
           {/* Image previews */}
           {formData.currentImage && !formData.imageFile && (
-            <img src={`http://localhost:3000/uploads/${formData.currentImage}`} alt="Current" className="h-24 w-24 object-cover rounded md:col-span-2" />
+            <img src={`${API_URL}/uploads/${formData.currentImage}`} alt="Current" className="h-24 w-24 object-cover rounded md:col-span-2" />
           )}
           {formData.imageFile && (
             <img src={URL.createObjectURL(formData.imageFile)} alt="Preview" className="h-24 w-24 object-cover rounded md:col-span-2" />

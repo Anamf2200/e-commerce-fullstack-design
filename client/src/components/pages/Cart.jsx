@@ -24,6 +24,8 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
+    const API_URL = "https://server-cool-snowflake-7302.fly.dev";
+
   const navigate= useNavigate()
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems || []);
@@ -51,7 +53,7 @@ const savedItems = [ { name: 'GoPro HERO6 4K Action Camera - Black', price: 99.5
     (<div className="w-full sm:w-1/2 lg:w-1/4 px-2 mb-4">
        <div className="bg-white rounded-lg overflow-hidden h-full"> 
         <div className="h-48 p-4 flex items-center justify-center bg-gray-100 rounded-t-lg"> 
-          <img src={`http://localhost:3000/uploads/${item.image}`} alt={item.name} className="max-h-full max-w-full object-contain" /> 
+          <img src={`${API_URL}/uploads/${item.image}`} alt={item.name} className="max-h-full max-w-full object-contain" /> 
           </div>
            <div className="p-3"> 
             <p className="text-base font-semibold text-gray-800 mb-1">
@@ -67,7 +69,7 @@ const savedItems = [ { name: 'GoPro HERO6 4K Action Camera - Black', price: 99.5
     <div className="flex border-b border-gray-200 py-4">
       <div className="w-20 h-20 flex-shrink-0 mr-4">
         <img
-          src={`http://localhost:3000/uploads/${item.image}`}
+          src={`${API_URL}/uploads/${item.image}`}
           alt={item.name}
           className="w-full h-full object-contain border border-gray-100 rounded-md"
         />
