@@ -6,7 +6,7 @@ import order from '../assets/images/Orders.png';
 import cart from '../assets/images/Cart.png';
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
-import  LogOut  from '../assets/images/Logout.png';
+import  LogOut  from '../assets/images/logout.png';
 import { logOut } from '../slices/auth-slice';
 import { useDispatch } from 'react-redux';
 const Navbar = () => {
