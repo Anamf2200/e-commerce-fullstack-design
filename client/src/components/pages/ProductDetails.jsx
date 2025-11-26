@@ -39,6 +39,8 @@ import { useGetProductQuery } from '../../productRedux/productApi'
 
 
 const ProductDetails = () => {
+      const API_URL = "https://server-cool-snowflake-7302.fly.dev";
+
     const {id}=useParams()
     const {data,isLoading,isError}=useGetProductByIdQuery(id)
     const{data:product}=useGetProductQuery()
@@ -79,27 +81,27 @@ const activeTab = 'description';
                     <div className="w-full lg:w-4/12 flex-shrink-0 mb-6 lg:mb-0">
                         
                         <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-md flex justify-center items-center h-96 mb-4">
-                            <img src={`http://localhost:3000/uploads/${data.image}`} alt="Main Product View" className="max-h-full max-w-full object-contain" />
+                            <img src={`${API_URL}/uploads/${data.image}`} alt="Main Product View" className="max-h-full max-w-full object-contain" />
                         </div>
                         
                         <div className="flex space-x-3 overflow-x-auto pb-2">
                             <button className="w-16 h-16 flex-shrink-0 bg-white border border-orange-500 rounded-md p-1 hover:border-blue-500 transition">
-                                <img src={`http://localhost:3000/uploads/${data.image}`} alt="Thumbnail 1" className="w-full h-full object-contain" />
+                                <img src={`${API_URL}/uploads/${data.image}`} alt="Thumbnail 1" className="w-full h-full object-contain" />
                             </button>
                             <button className="w-16 h-16 flex-shrink-0 bg-white border border-gray-200 rounded-md p-1 hover:border-blue-500 transition">
-                                <img src={`http://localhost:3000/uploads/${data.image}`} alt="Thumbnail 2" className="w-full h-full object-contain" />
+                                <img src={`${API_URL}/uploads/${data.image}`} alt="Thumbnail 2" className="w-full h-full object-contain" />
                             </button>
                             <button className="w-16 h-16 flex-shrink-0 bg-white border border-gray-200 rounded-md p-1 hover:border-blue-500 transition">
-                                <img src={`http://localhost:3000/uploads/${data.image}`} alt="Thumbnail 3" className="w-full h-full object-contain" />
+                                <img src={`${API_URL}/uploads/${data.image}`} alt="Thumbnail 3" className="w-full h-full object-contain" />
                             </button>
                             <button className="w-16 h-16 flex-shrink-0 bg-white border border-gray-200 rounded-md p-1 hover:border-blue-500 transition">
-                                <img src={`http://localhost:3000/uploads/${data.image}`} alt="Thumbnail 4" className="w-full h-full object-contain" />
+                                <img src={`${API_URL}/uploads/${data.image}`} alt="Thumbnail 4" className="w-full h-full object-contain" />
                             </button>
                             <button className="w-16 h-16 flex-shrink-0 bg-white border border-gray-200 rounded-md p-1 hover:border-blue-500 transition">
-                                <img src={`http://localhost:3000/uploads/${data.image}`} alt="Thumbnail 5" className="w-full h-full object-contain" />
+                                <img src={`${API_URL}/uploads/${data.image}`} alt="Thumbnail 5" className="w-full h-full object-contain" />
                             </button>
                             <button className="w-16 h-16 flex-shrink-0 bg-white border border-gray-200 rounded-md p-1 hover:border-blue-500 transition">
-                                <img src={`http://localhost:3000/uploads/${data.image}`} alt="Thumbnail 6" className="w-full h-full object-contain" />
+                                <img src={`${API_URL}/uploads/${data.image}`} alt="Thumbnail 6" className="w-full h-full object-contain" />
                             </button>
                         </div>
                     </div>
@@ -324,7 +326,7 @@ const activeTab = 'description';
                     <div className="space-y-3">
                         {product.map((item, index) => (
                             <div key={index} className="flex space-x-3 items-center border border-gray-200 p-2 rounded-lg hover:shadow-sm transition cursor-pointer">
-                                <img src={`http://localhost:3000/uploads/${item.image}`} alt={item.name} className="w-12 h-12 object-cover rounded-md flex-shrink-0" />
+                                <img src={`${API_URL}/uploads/${item.image}`} alt={item.name} className="w-12 h-12 object-cover rounded-md flex-shrink-0" />
                                 
                                 <div>
                                     <p className="text-xs font-medium text-gray-700 line-clamp-2">{item.name}</p>
@@ -356,7 +358,7 @@ const activeTab = 'description';
                             
                             <div className="h-48 md:h-56 p-4 flex items-center justify-center bg-gray-100 border border-gray-200 rounded-t-lg">
                                 <img 
-                                    src={`http://localhost:3000/uploads/${item.image}`} 
+                                    src={`${API_URL}/uploads/${item.image}`} 
                                     alt={item.name} 
                                     className="max-h-full max-w-full object-contain"
                                 />

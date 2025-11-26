@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom"; // for navigation
 
 const AdminPanel = () => {
+  const API_URL = "https://server-cool-snowflake-7302.fly.dev";
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { data: products = [], isFetching, refetch } = useGetProductQuery();
@@ -196,7 +198,7 @@ const AdminPanel = () => {
                   <td className="px-4 py-2 whitespace-nowrap">{p.stock}</td>
                   <td className="px-4 py-2 whitespace-nowrap">
                     <img
-                      src={`http://localhost:3000/uploads/${p.image}`}
+                      src={`${API_URL}/uploads/${p.image}`}
                       alt={p.name}
                       className="h-16 w-16 object-cover rounded"
                     />
