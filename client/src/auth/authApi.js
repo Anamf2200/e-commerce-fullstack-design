@@ -1,5 +1,5 @@
 import { createApi,fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-const API_URL='https://server-cool-snowflake-7302.fly.dev/'
+const API_URL=import.meta.env.VITE_API_URL
 
 export const authApi=createApi({
       reducerPath:"authApi",
